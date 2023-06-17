@@ -7,3 +7,14 @@ export const GET: RequestHandler = async ({ params }) => {
 
   return new Response(JSON.stringify(data))
 };
+
+export const DELETE: RequestHandler = async ({ params }) => {
+  await fetch(`${PUBLIC_API_HOST}/posts/${params.postId}`, {
+    method: 'DELETE',
+    headers: {
+        'Content-Type': 'application/json'
+    }
+  })
+
+  return new Response()
+};

@@ -2,10 +2,22 @@
   import { PUBLIC_API_HOST } from '$env/static/public';
   import type { PageData } from './$types'
   import FormattedDate from '$lib/FormattedDate.svelte';
+  import { fade } from 'svelte/transition';
 
   export let data: PageData
 
-  const posts = data.posts.data
+  let posts = data.posts.data
+
+  const handleDelete = async (id: number) => {
+    const res = await fetch(`${PUBLIC_API_HOST}/posts/${id}`, {
+      method: 'DELETE'
+    })
+
+    if (res.status == 204) {
+      const temp = posts.filter((post: any) => post.id != id);
+      posts = [...temp]
+    }
+  }
 </script>
 
 <div class="my-4 mx-auto max-w-6xl px-6 lg:px-8">
@@ -32,7 +44,7 @@
             </thead>
             <tbody class="divide-y divide-gray-200">
               {#each posts as post (post.id)}
-                <tr>
+                <tr transition:fade>
                   <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                     <a href="posts/{post.id}">
                       {post.attributes.title}
@@ -41,8 +53,8 @@
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><FormattedDate date={post.attributes.created_at}/></td>
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center">{post.attributes.images.length}</td>
                   <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                    <button type="button" class="block rounded-md bg-red-700 px-2 py-1 text-center text-sm font-semibold text-white hover:bg-red-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
-                      <a href="#" class="text-white hover:text-white">Delete<span class="sr-only">, {post.attributes.title}</span></a>
+                    <button on:click={() => handleDelete(post.id)} type="button" class="block rounded-md bg-red-700 px-2 py-1 text-center text-sm font-semibold text-white hover:bg-red-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
+                      Delete<span class="sr-only">, {post.attributes.title}</span>
                     </button>
                   </td>
                 </tr>
