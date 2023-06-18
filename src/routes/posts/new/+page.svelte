@@ -1,7 +1,5 @@
 <script lang="ts">
   import PostForm from '$lib/PostForm.svelte';
-
-  let post = { attributes: { title: '', summary: '', body: '' }}
 </script>
 
 <div>
@@ -9,7 +7,7 @@
     <div class="mx-auto">
       <div class="text-center">
         <h1>New Post</h1>
-        <PostForm {post} />
+        <PostForm />
       </div>
     </div>
   </div>

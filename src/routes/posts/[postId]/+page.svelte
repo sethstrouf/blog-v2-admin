@@ -1,11 +1,18 @@
 <script lang="ts">
   import type { PageData } from './$types';
   import PostForm from '$lib/PostForm.svelte';
+  import { page } from '$app/stores'
+  import { toast } from '@zerodevx/svelte-toast'
 
   export let data: PageData;
 
   let post = data.post.data
   let comments = data.post.included
+
+  if ($page.form?.status == 200 || $page.form?.status == 201) {
+    toast.pop(0)
+    toast.push('Post Saved Successfully!')
+  }
 </script>
 
 <div>

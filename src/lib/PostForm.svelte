@@ -1,18 +1,19 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
+  import { goto } from '$app/navigation'
   import { page } from '$app/stores'
-	import { browser } from '$app/environment';
+	import { browser } from '$app/environment'
+  import { toast } from '@zerodevx/svelte-toast'
 
-  export let post: { attributes: { title: string, summary: string, body: string }}
+  export let post: { attributes: { title: string, summary: string, body: string }} = { attributes: { title: '', summary: '', body: '' }}
 
   let title = post.attributes.title
   let summary = post.attributes.summary
   let body = post.attributes.body
 
-  $: {
-    if ($page.form?.status == 201 && browser) {
-      goto(`/posts/${$page.form.post.id}`, { replaceState: true })
-    }
+  if ($page.form?.status == 201 && browser) {
+    toast.pop(0)
+    goto(`/posts/${$page.form.post.id}`, { replaceState: true })
+    toast.push('Post Saved Successfully!')
   }
 </script>
 
@@ -40,4 +41,10 @@
   <div class="mt-10">
     <button type="submit" disabled={!title || !summary || !body} class="disabled:bg-gray-500 block w-full rounded-md bg-turquoise-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-turquoise-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-valencia-600">Save</button>
   </div>
+
+  <!-- <div class="mt-12 w-full">
+    {#if $page.form?.status == 200 || $page.form?.status == 201 && browser}
+    <p class="bg-green-500 px-4 py-2 rounded font-bold">Post saved successfully!</p>
+    {/if}
+  </div> -->
 </form>

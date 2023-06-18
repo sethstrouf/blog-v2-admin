@@ -17,3 +17,9 @@ h2 {
 a {
   @apply text-valencia-600 hover:text-valencia-800;
 }
+
+:root {
+  --toastBackground: rgba(22, 163, 74, 1);
+  --toastColor: white;
+  --toastBarBackground: rgba(255, 255, 255, 1);
+}
