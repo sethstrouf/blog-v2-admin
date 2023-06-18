@@ -1,7 +1,7 @@
 import { PUBLIC_API_HOST } from '$env/static/public';
 
 export const actions = {
-    default: async ({ request, params }) => {
+    default: async ({ request }) => {
         const formData = await request.formData();
 
         const title = formData.get('title')
@@ -14,8 +14,8 @@ export const actions = {
             body
         }
 
-        const res = await fetch(`${PUBLIC_API_HOST}/posts/${params.postId}`, {
-            method: 'PATCH',
+        const res = await fetch(`${PUBLIC_API_HOST}/posts`, {
+            method: 'POST',
             body: JSON.stringify({ post }),
             headers: {
                 'Content-Type': 'application/json'
