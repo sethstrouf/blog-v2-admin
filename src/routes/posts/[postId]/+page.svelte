@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { PageData } from './$types';
   import PostForm from '$lib/PostForm.svelte';
+  import CommentsTable from '$lib/CommentsTable.svelte';
   import { page } from '$app/stores'
   import { toast } from '@zerodevx/svelte-toast'
 
@@ -22,6 +23,13 @@
         <h1 class="mb-4">Edit Post</h1>
         <p class="-mb-8"><a href="https://hannahbauer.me/blog/{post.id}" target="_blank" class="font-bold">Visit post</a></p>
         <PostForm {post} />
+
+        <h1 class="mt-12 mb-4">Comments</h1>
+        {#if comments.length}
+          <CommentsTable {comments} />
+        {:else}
+          <p>No comments</p>
+        {/if}
       </div>
     </div>
   </div>

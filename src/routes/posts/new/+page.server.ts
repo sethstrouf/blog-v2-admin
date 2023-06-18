@@ -1,7 +1,7 @@
 import { PUBLIC_API_HOST } from '$env/static/public';
 
 export const actions = {
-    default: async ({ request }) => {
+    default: async ({ request }: any) => {
         const formData = await request.formData();
 
         const title = formData.get('title')
