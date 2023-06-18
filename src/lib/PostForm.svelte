@@ -14,12 +14,14 @@
   let body = post.attributes.body
 
   let files: any
+  let isUploadingFiles: boolean = false
 
 	$: if (files) {
     uploadImages()
 	}
 
   const uploadImages = async () => {
+    isUploadingFiles = true
     const formData = new FormData();
 
     Array.prototype.forEach.call(files, (file) => {
@@ -40,6 +42,8 @@
     } else {
       toast.push('Image upload failed.', { theme: { '--toastBackground': 'red' }})
     }
+
+    isUploadingFiles = false
   }
 
   const deleteImage = async (url: string) => {
@@ -97,9 +101,12 @@
   <div class="flex gap-2 justify-center mt-4">
     {#each post.attributes.images as image (image?.url)}
       <div transition:fade>
-        <img src={`${PUBLIC_API_HOST}${image?.url}`} alt={image?.filename} class="w-20" />
+        <img src={`${PUBLIC_API_HOST}${image?.url}`} alt={image?.filename} class="w-20 rounded" />
         <button on:click={() => deleteImage(image?.url)} class="bg-red-600 hover:bg-red-700 w-full text-white rounded mt-0.5">Delete</button>
       </div>
     {/each}
+    {#if isUploadingFiles}
+      <div class="w-20 bg-gray-300 animate-pulse rounded" />
+    {/if}
   </div>
 </div>
