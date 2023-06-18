@@ -20,7 +20,6 @@
 	}
 
   const uploadImages = async () => {
-    toast.pop(0)
     const formData = new FormData();
 
     Array.prototype.forEach.call(files, (file) => {
@@ -29,20 +28,21 @@
 
     const res = await fetch(`${PUBLIC_API_HOST}/posts/${$page.params.postId}/attach_images`, {
       method: 'POST',
-      body: formData
+      body: formData,
+      headers: {
+        'Content-Disposition': 'form-data'
+      }
     })
 
-    const data = await res.json();
-
-    if (data) {
+    if (res.status == 200) {
+      const data = await res.json();
       post = data.data
-      toast.push('Images uploaded successfully!')
+    } else {
+      toast.push('Image upload failed.', { theme: { '--toastBackground': 'red' }})
     }
   }
 
   const deleteImage = async (url: string) => {
-    toast.pop(0)
-
     const res = await fetch(`${PUBLIC_API_HOST}/posts/${$page.params.postId}/delete_image`, {
       method: 'POST',
       body: JSON.stringify({ image_url: url }),
@@ -53,7 +53,6 @@
 
     const temp = post.attributes.images.filter((image: Image) => image.url != url);
     post.attributes.images = [...temp]
-    toast.push('Image deleted!')
   }
 
   if ($page.form?.status == 201 && browser) {
