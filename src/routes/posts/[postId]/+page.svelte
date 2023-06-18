@@ -21,11 +21,11 @@
     <div class="mx-auto">
       <div class="text-center">
         <h1 class="mb-4">Edit Post</h1>
-        <p class="-mb-8"><a href="https://hannahbauer.me/blog/{post.id}" target="_blank" class="font-bold">Visit post</a></p>
+        <p class="-mb-8"><a href="https://hannahbauer.me/blog/{post?.id}" target="_blank" class="font-bold">Visit post</a></p>
         <PostForm {post} />
 
         <h1 class="mt-12 mb-4">Comments</h1>
-        {#if comments.length}
+        {#if comments?.length}
           <CommentsTable {comments} />
         {:else}
           <p>No comments</p>
