@@ -1,8 +1,14 @@
 <script>
   import "../app.css"
-  import { SvelteToast, toast } from '@zerodevx/svelte-toast'
+  import NavigationBar from "./Navigation.svelte";
+  import Footer from "./Footer.svelte";
+  import { SvelteToast } from '@zerodevx/svelte-toast'
 </script>
+
+<NavigationBar />
 
 <slot />
 
 <SvelteToast />
+
+<Footer />
