@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { PUBLIC_API_HOST } from '$env/static/public';
   import type { PageData } from './$types'
   import FormattedDate from '$lib/FormattedDate.svelte';
   import { fade } from 'svelte/transition';
@@ -37,6 +36,7 @@
               <tr>
                 <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Title</th>
                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Date</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Comment Count</th>
                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Image Count</th>
                 <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0 "><span class="sr-only">Delete</span></th>
               </tr>
@@ -50,6 +50,7 @@
                     </a>
                   </td>
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><FormattedDate date={post.attributes.created_at}/></td>
+                  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center">{post.relationships.comments.data.length}</td>
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center">{post.attributes.images.length}</td>
                   <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                     <button on:click={() => handleDelete(post.id)} type="button" class="block rounded-md bg-red-700 px-2 py-1 text-center text-sm font-semibold text-white hover:bg-red-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
