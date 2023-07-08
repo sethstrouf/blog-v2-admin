@@ -9,11 +9,13 @@
   let posts = data.posts.data
 
   const handleDelete = async (id: number) => {
-    const res = await fetch(`${PUBLIC_API_HOST}/posts/${id}`, {
+    const res = await fetch(`/api/posts/${id}`, {
       method: 'DELETE'
     })
 
-    if (res.status == 204) {
+    const data = await res.json()
+
+    if (data.status == 204) {
       const temp = posts.filter((post: any) => post.id != id);
       posts = [...temp]
     }

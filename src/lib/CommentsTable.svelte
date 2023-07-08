@@ -1,16 +1,17 @@
 <script lang="ts">
-  import { PUBLIC_API_HOST } from '$env/static/public';
   import { fade } from 'svelte/transition';
   import FormattedDate from './FormattedDate.svelte';
 
   export let comments: any
 
   const handleDelete = async (id: number) => {
-    const res = await fetch(`${PUBLIC_API_HOST}/comments/${id}`, {
+    const res = await fetch(`/api/comments/${id}`, {
       method: 'DELETE'
     })
 
-    if (res.status == 204) {
+    const data = await res.json()
+
+    if (data.status == 204) {
       const temp = comments.filter((comment: any) => comment.id != id);
       comments = [...temp]
     }

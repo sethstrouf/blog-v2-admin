@@ -1,7 +1,7 @@
 import { PUBLIC_API_HOST } from '$env/static/public';
 
 export const actions = {
-    default: async ({ request, params }: any) => {
+    default: async ({ locals, request, params }: any) => {
         const formData = await request.formData();
 
         const title = formData.get('title')
@@ -18,7 +18,8 @@ export const actions = {
             method: 'PATCH',
             body: JSON.stringify({ post }),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${locals.user.token}`
             }
         })
 
