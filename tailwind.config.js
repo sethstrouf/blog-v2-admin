@@ -3,9 +3,12 @@ export default {
   content: ['./src/**/*.{html,js,svelte,ts}'],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['"DM Sans"', 'system-ui', 'sans-serif'],
+      },
       colors: {
-        'valencia': {
-          50: "#fef3f2",
+        valencia: {
+          50: '#fef3f2',
           100: '#fde8e6',
           200: '#fad3d1',
           300: '#f5b0ac',
@@ -17,8 +20,8 @@ export default {
           900: '#7d1e2a',
           950: '#460b11',
         },
-        'turquoise': {
-          50: "#f0fdfb",
+        turquoise: {
+          50: '#f0fdfb',
           100: '#cdfaf4',
           200: '#9bf4eb',
           300: '#61e7dd',
@@ -30,8 +33,8 @@ export default {
           900: '#144c4d',
           950: '#052c2e',
         },
-      }
+      },
     },
   },
-  plugins: [],
-}
+  plugins: [require('@tailwindcss/forms')],
+};

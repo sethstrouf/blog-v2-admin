@@ -1,37 +1,58 @@
 <script lang="ts">
-  let email: string
-  let password: string
+  import { enhance } from '$app/forms';
+  import GradientAccent from '$lib/components/GradientAccent.svelte';
+
+  export let form;
+
+  let email = '';
+  let password = '';
+  let submitting = false;
 </script>
 
-<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-  <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-    <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in</h2>
-  </div>
+<svelte:head>
+  <title>sign in · hannah bauer admin</title>
+</svelte:head>
 
-  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-    <form class="space-y-6" action="#" method="POST">
+<GradientAccent />
+
+<div class="page-container">
+  <div class="mx-auto max-w-md">
+    <header class="text-center">
+      <p class="section-label">admin</p>
+      <h1 class="mt-2">sign in</h1>
+      <p class="mt-3 text-gray-600">Manage blog posts and comments.</p>
+    </header>
+
+    <form
+      method="POST"
+      class="card mt-8 space-y-5 p-6 sm:p-8"
+      use:enhance={() => {
+        submitting = true;
+        return async ({ update }) => {
+          submitting = false;
+          await update();
+        };
+      }}
+    >
+      {#if form?.message}
+        <p class="rounded-lg bg-valencia-50 px-4 py-3 text-sm text-valencia-800" role="alert">
+          {form.message}
+        </p>
+      {/if}
+
       <div>
-        <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
-        <div class="mt-2">
-          <input id="email" name="email" type="email" bind:value={email} autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-turquoise-600 sm:text-sm sm:leading-6">
-        </div>
+        <label for="email" class="block text-sm font-semibold text-gray-900">Email</label>
+        <input id="email" name="email" type="email" bind:value={email} autocomplete="email" required class="input-field mt-2" />
       </div>
 
       <div>
-        <div class="flex items-center justify-between">
-          <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
-          <!-- <div class="text-sm">
-            <a href="#" class="font-semibold text-turquoise-600 hover:text-turquoise-500">Forgot password?</a>
-          </div> -->
-        </div>
-        <div class="mt-2">
-          <input id="password" name="password" type="password" bind:value={password} autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-turquoise-600 sm:text-sm sm:leading-6">
-        </div>
+        <label for="password" class="block text-sm font-semibold text-gray-900">Password</label>
+        <input id="password" name="password" type="password" bind:value={password} autocomplete="current-password" required class="input-field mt-2" />
       </div>
 
-      <div>
-        <button type="submit" disabled={!email || !password} class="disabled:bg-gray-500 flex w-full justify-center rounded-md bg-turquoise-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-turquoise-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-turquoise-600">Sign in</button>
-      </div>
+      <button type="submit" disabled={!email || !password || submitting} class="btn-primary w-full">
+        {submitting ? 'Signing in…' : 'Sign in'}
+      </button>
     </form>
   </div>
 </div>

@@ -28,12 +28,9 @@
       formData.append("images[]", file)
     });
 
-    const res = await fetch(`${PUBLIC_API_HOST}/posts/${$page.params.postId}/attach_images`, {
+    const res = await fetch(`/api/posts/${$page.params.postId}/attach_images`, {
       method: 'POST',
       body: formData,
-      headers: {
-        'Content-Disposition': 'form-data'
-      }
     })
 
     if (res.status == 200) {
@@ -47,12 +44,12 @@
   }
 
   const deleteImage = async (url: string) => {
-    const res = await fetch(`${PUBLIC_API_HOST}/posts/${$page.params.postId}/delete_image`, {
+    const res = await fetch(`/api/posts/${$page.params.postId}/delete_image`, {
       method: 'POST',
       body: JSON.stringify({ image_url: url }),
       headers: {
-            'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
     })
 
     const temp = post.attributes.images.filter((image: Image) => image.url != url);

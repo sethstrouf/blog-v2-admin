@@ -2,20 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply bg-gray-100;
+@layer base {
+  body {
+    @apply bg-stone-50 text-gray-800 antialiased;
+  }
+
+  h1 {
+    @apply text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl;
+  }
+
+  h2 {
+    @apply text-xl font-semibold tracking-tight text-gray-900 sm:text-2xl;
+  }
+
+  a {
+    @apply text-valencia-600 transition-colors hover:text-valencia-800;
+  }
 }
 
-h1 {
-  @apply text-3xl font-bold tracking-tight text-gray-800 sm:text-4xl;
-}
+@layer components {
+  .page-container {
+    @apply mx-auto max-w-5xl px-6 lg:px-8;
+  }
 
-h2 {
-  @apply text-xl font-semibold tracking-tight text-gray-800 sm:text-2xl
-}
+  .section-label {
+    @apply text-sm font-semibold uppercase tracking-wider text-turquoise-700;
+  }
 
-a {
-  @apply text-valencia-600 hover:text-valencia-800;
+  .card {
+    @apply rounded-2xl border border-stone-200 bg-white shadow-sm;
+  }
+
+  .input-field {
+    @apply block w-full rounded-lg border-0 px-3.5 py-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-stone-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-valencia-600 sm:text-sm sm:leading-6;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-lg bg-turquoise-500 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-turquoise-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-valencia-600 disabled:cursor-not-allowed disabled:bg-stone-400;
+  }
 }
 
 :root {
